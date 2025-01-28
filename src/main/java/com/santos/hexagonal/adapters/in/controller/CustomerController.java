@@ -4,6 +4,7 @@ import com.santos.hexagonal.adapters.in.controller.mapper.CustomerMapper;
 import com.santos.hexagonal.adapters.in.controller.request.CustomerRequest;
 import com.santos.hexagonal.adapters.in.controller.response.CustomerResponse;
 import com.santos.hexagonal.application.core.domain.Customer;
+import com.santos.hexagonal.application.ports.in.DeleteCustomerByIdInputPort;
 import com.santos.hexagonal.application.ports.in.FindCustomerByIdInputPort;
 import com.santos.hexagonal.application.ports.in.InsertCustomerInputPort;
 import com.santos.hexagonal.application.ports.in.UpdateCustomerInputPort;
@@ -29,6 +30,9 @@ public class CustomerController {
     @Autowired
     private UpdateCustomerInputPort updateCustomerInputPort;
 
+    @Autowired
+    private DeleteCustomerByIdInputPort deleteCustomerByIdInputPort;
+
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody CustomerRequest customerRequest) {
         var customer = customerMapper.toCustomer(customerRequest);
@@ -45,7 +49,7 @@ public class CustomerController {
         return ResponseEntity.ok().body(customerResponse);
     }
 
-    @PutMapping("/id")
+    @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable final String id, @Valid @RequestBody CustomerRequest customerRequest) {
         Customer customer = customerMapper.toCustomer(customerRequest);
 
@@ -54,5 +58,13 @@ public class CustomerController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable final String id) {
+        deleteCustomerByIdInputPort.delete(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
 
 }
