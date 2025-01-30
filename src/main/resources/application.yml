@@ -1,7 +1,10 @@
+server:
+  port: 8081
+
 santos:
   client:
     address:
-      url: http://localhost:8882/addresses
+      url: http://localhost:8082/addresses
 
 spring:
   data:
