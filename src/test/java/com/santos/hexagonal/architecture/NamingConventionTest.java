@@ -92,7 +92,7 @@ public class NamingConventionTest  {
     @ArchTest
     public static final ArchRule usecase_reside_only_usecase_package = classes()
             .that()
-            .haveNameMatching(".*Usecase")
+            .haveNameMatching(".*UseCase")
             .should()
             .resideInAnyPackage("..application.core.usecase")
             .as("Usecase classes should reside inside usecase package in core package");
